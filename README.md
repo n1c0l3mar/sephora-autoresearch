@@ -1,10 +1,10 @@
 # Sephora AutoResearch Project
 
 ## Problem
-Predict product ratings for Sephora skincare products using structured product and review data.
+Predict product ratings for Sephora products using structured product features data.
 
 ## Data
-Kaggle Sephora Products and Skincare Reviews dataset.
+Kaggle Sephora Products Information. 
 
 ## Metric
 Mean Absolute Error (MAE)

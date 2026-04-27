@@ -20,12 +20,12 @@ Kaggle Dataset:
 https://www.kaggle.com/datasets/nadyinky/sephora-products-and-skincare-reviews  
 
 This project uses:
-- `product_info.csv`
+- product_info.csv
 
 ---
 
 ## Target Variable
-- `rating`
+- rating
 
 ---
 
@@ -42,8 +42,10 @@ Lower MAE = better model
 - Test: 15%
 
 Deterministic split using:
-```python
+
 random_state = 390
+
+---
 
 ## Reproducible Instructions
 
@@ -51,37 +53,43 @@ Follow these steps to reproduce the baseline model and results.
 
 ### 1. Clone the repository
 
-```bash
-git clone https://github.com/n1c0l3mar/sephora-autoresearch/tree/main
-cd sephora-autoresearch
+git clone https://github.com/n1c0l3mar/sephora-autoresearch  
+cd sephora-autoresearch  
+
+---
 
 ### 2. Install required packages 
 
-pip install pandas numpy scikit-learn
+pip install pandas numpy scikit-learn  
+
+---
 
 ### 3. Ensure the dataset is available
 
 Make sure the file product_info.csv is located in the root directory of the project.
 
-If the dataset is not included in the repository, download it from:
-https://www.kaggle.com/datasets/nadyinky/sephora-products-and-skincare-reviews
+If the dataset is not included in the repository, download it from:  
+https://www.kaggle.com/datasets/nadyinky/sephora-products-and-skincare-reviews  
+
+---
 
 ### 4. Run the baseline model
 
-Execute the following command:
+python3 run.py "baseline linear regression"  
 
-python3 run.py "baseline linear regression"
-
+---
 
 ### 5. Expected output
 
 After running the command, the terminal should display output similar to:
 
-Validation MAE: ~0.38
-Runtime seconds: ~0.07
+Validation MAE: ~0.38  
+Runtime seconds: ~0.07  
+
+---
 
 ### 6. Verify experiment log
 
 Open the file results.tsv. A new row should appear similar to:
 
-baseline linear regression 0.3825 0.07
+baseline linear regression    0.3825    0.07  

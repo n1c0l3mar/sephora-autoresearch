@@ -94,6 +94,8 @@ Open the file results.tsv. A new row should appear similar to:
 
 baseline linear regression    0.3825    0.07  
 
+---
+
 ## Failure Modes
 
 The following failure patterns were observed during experimentation:

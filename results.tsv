@@ -1,3 +1,8 @@
 description	val_mae	runtime_seconds	status
 no description	0.3825	0.2503	logged
 baseline linear regression	0.3825	0.0733	logged
+baseline linear regression	0.3825	0.1387	logged
+ridge regression alpha 1	0.3821	0.0854	logged
+lasso regression alpha 0.01	0.3806	0.2948	logged
+random forest 100 trees	0.3311	22.4052	logged
+gradient boosting	0.352	2.416	logged

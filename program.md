@@ -44,5 +44,10 @@ The current best model is determined based on the lowest validation MAE recorded
 ## Evaluation Rule
 Every experiment must be evaluated by running:
 
-```bash
 python3 run.py "<short experiment description>"
+
+The model is trained on the training set and evaluated on the validation set.
+
+Performance is measured using Mean Absolute Error (MAE).
+
+All experiments are compared using validation MAE only.

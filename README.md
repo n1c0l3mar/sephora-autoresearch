@@ -93,3 +93,19 @@ Runtime seconds: ~0.07
 Open the file results.tsv. A new row should appear similar to:
 
 baseline linear regression    0.3825    0.07  
+
+## Failure Modes
+
+The following failure patterns were observed during experimentation:
+
+- Incorrect Imports  
+  Some models failed due to importing from the wrong sklearn module.
+
+- Model Compatibility Issues  
+  Certain models (e.g., HistGradientBoosting) failed due to incompatibility with preprocessing or data format.
+
+- Runtime Failures  
+  Some experiments crashed and did not produce a valid MAE, so they were not logged in `results.tsv`.
+
+- Logging Limitation  
+  Failed runs are not automatically recorded in `results.tsv`, so failures must be tracked manually.

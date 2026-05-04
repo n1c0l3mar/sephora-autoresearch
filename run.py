@@ -6,7 +6,7 @@ from pathlib import Path
 
 from sklearn.metrics import mean_absolute_error
 
-from prepare import load_data
+from prepare import load_data, build_preprocessor
 from model import build_model
 
 
@@ -39,7 +39,17 @@ def main():
 
     try:
         # Load deterministic train/validation data
-        X_train, X_val, y_train, y_val, preprocessor = load_data()
+        (
+            X_train,
+            X_val,
+            X_test,
+            y_train,
+            y_val,
+            y_test,
+            numeric_features,
+            categorical_features,
+        ) = load_data()
+        preprocessor = build_preprocessor(numeric_features, categorical_features)
 
         # Build model from editable model.py
         model = build_model(preprocessor)

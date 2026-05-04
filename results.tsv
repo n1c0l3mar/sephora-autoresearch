@@ -14,3 +14,4 @@ intentional model failure logging test	NA	0.4857	failure	crash	InvalidParameterE
 random forest 400 trees max_features0.7	0.3284	115.6487	success	keep	
 rf 500 trees	0.3286	145.6189	success	discard	
 rf 400 max_features 0.8	0.3297	165.6336	success	discard	
+rf 450 trees max_features0.7	0.3285	145.9211	success	discard	

@@ -15,6 +15,7 @@ The experiment axis is `max_features`.
 | A | 0.5 |
 | B | 0.7 |
 | C | 1.0 |
+| D | 0.85 |
 
 ## Held Fixed
 

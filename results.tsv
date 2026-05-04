@@ -16,3 +16,6 @@ rf 500 trees	0.3286	145.6189	success	discard
 rf 400 max_features 0.8	0.3297	165.6336	success	discard	
 rf 450 trees max_features0.7	0.3285	145.9211	success	discard	
 rf max_features controlled 0.5	0.3294	72.1585	success	discard	
+rf controlled max_features  0.7	0.3289	116.7758	success	discard	
+rf controlled max_features  1.0	0.3296	120.5494	success	discard	
+rf controlled max_features  0.85	0.3293	144.2035	success	discard	

@@ -8,7 +8,7 @@ def build_model(preprocessor):
         ("model", RandomForestRegressor(
             n_estimators=300,
             min_samples_leaf=1,
-            max_features=0.5,
+            max_features=0.85,
             random_state=390,
             n_jobs=-1))
     ])

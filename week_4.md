@@ -39,3 +39,6 @@ The experiment axis is `max_features`.
 | F | Intermediate feature subsampling | 0.75 | 0.3293 | 94.0711 | success | discard | max_features=0.75 matched the 0.85 result, suggesting midrange values are stable but not competitive with the best overall model. |
 | G | Intermediate feature subsampling | 0.78 | 0.3298 | 109.8493 | success | discard | max_features=0.78 was one of the weaker controlled runs, suggesting this setting may add noise without improving splits. |
 | H | Intermediate feature subsampling | 0.82 | 0.3292 | 85.5758 | success | discard | max_features=0.82 was the best of the added midrange probes, but still did not beat the 0.7 controlled baseline. |
+
+# Week 4 Metric-Over-Time Plot
+![Week 4 metric-over-time plot](week4_metric_over_time.png)

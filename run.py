@@ -1,6 +1,5 @@
 import sys
 import time
-import traceback
 import pandas as pd
 from pathlib import Path
 
@@ -13,7 +12,24 @@ from model import build_model
 RESULTS_FILE = "results.tsv"
 
 
-def log_result(description, val_mae, runtime_seconds, status, error_message=""):
+def get_best_previous_mae():
+    results_path = Path(RESULTS_FILE)
+
+    if not results_path.exists():
+        return None
+
+    results = pd.read_csv(results_path, sep="\t")
+    if "val_mae" not in results.columns:
+        return None
+
+    valid_mae = pd.to_numeric(results["val_mae"], errors="coerce").dropna()
+    if valid_mae.empty:
+        return None
+
+    return valid_mae.min()
+
+
+def log_result(description, val_mae, runtime_seconds, status, decision, error_message=""):
     results_path = Path(RESULTS_FILE)
 
     row = {
@@ -21,6 +37,7 @@ def log_result(description, val_mae, runtime_seconds, status, error_message=""):
         "val_mae": val_mae,
         "runtime_seconds": round(runtime_seconds, 4),
         "status": status,
+        "decision": decision,
         "error_message": error_message
     }
 
@@ -60,6 +77,12 @@ def main():
 
         val_mae = mean_absolute_error(y_val, preds)
         runtime_seconds = time.time() - start_time
+        best_previous_mae = get_best_previous_mae()
+        decision = (
+            "keep"
+            if best_previous_mae is None or val_mae < best_previous_mae
+            else "discard"
+        )
 
         # Log successful run
         log_result(
@@ -67,6 +90,7 @@ def main():
             val_mae=round(val_mae, 4),
             runtime_seconds=runtime_seconds,
             status="success",
+            decision=decision,
             error_message=""
         )
 
@@ -76,7 +100,7 @@ def main():
 
     except Exception as e:
         runtime_seconds = time.time() - start_time
-        error_message = traceback.format_exc().replace("\n", " | ")
+        error_message = f"{type(e).__name__}: {e}"
 
         # Log failed run
         log_result(
@@ -84,6 +108,7 @@ def main():
             val_mae="NA",
             runtime_seconds=runtime_seconds,
             status="failure",
+            decision="crash",
             error_message=error_message
         )
 

@@ -11,4 +11,6 @@ random forest 300 max_features0.7	0.3289	100.6221	success	keep
 intentional failure logging test	NA	0.4576	failure	crash	ValueError: too many values to unpack (expected 5)
 setup fix validation run	0.3289	82.8059	success	discard	
 intentional model failure logging test	NA	0.4857	failure	crash	InvalidParameterError: The 'n_estimators' parameter of RandomForestRegressor must be an int in the range [1, inf). Got 'invalid' instead.
-week 3 successful dry run	0.3284	115.6487	success	keep	
+random forest 400 trees max_features0.7	0.3284	115.6487	success	keep	
+rf 500 trees	0.3286	145.6189	success	discard	
+rf 400 max_features 0.8	0.3297	165.6336	success	discard	

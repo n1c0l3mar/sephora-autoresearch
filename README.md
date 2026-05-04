@@ -5,11 +5,6 @@ Predicting Sephora Product Ratings Using Structured Product Data
 
 ---
 
-## Week 2 Goal
-Establish a fully reproducible baseline model with a fixed evaluation pipeline that can be run end-to-end.
-
----
-
 ## Research Question
 Which structured product features (e.g., price, category, product metadata) best predict Sephora product ratings?
 

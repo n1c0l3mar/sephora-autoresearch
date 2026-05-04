@@ -19,3 +19,7 @@ rf max_features controlled 0.5	0.3294	72.1585	success	discard
 rf controlled max_features  0.7	0.3289	116.7758	success	discard	
 rf controlled max_features  1.0	0.3296	120.5494	success	discard	
 rf controlled max_features  0.85	0.3293	144.2035	success	discard	
+rf controlled max_features 0.72	0.33	114.0266	success	discard	
+rf controlled max_features 0.75	0.3293	94.0711	success	discard	
+rf controlled max_features 0.78	0.3298	109.8493	success	discard	
+rf controlled max_features 0.82	0.3292	85.5758	success	discard	

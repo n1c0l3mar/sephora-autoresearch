@@ -1,43 +1,86 @@
 import sys
 import time
-import csv
-import os
+import traceback
+import pandas as pd
+from pathlib import Path
 
-from prepare import load_data, build_preprocessor, evaluate_model
+from sklearn.metrics import mean_absolute_error
+
+from prepare import load_data
 from model import build_model
 
 
 RESULTS_FILE = "results.tsv"
 
 
+def log_result(description, val_mae, runtime_seconds, status, error_message=""):
+    results_path = Path(RESULTS_FILE)
+
+    row = {
+        "description": description,
+        "val_mae": val_mae,
+        "runtime_seconds": round(runtime_seconds, 4),
+        "status": status,
+        "error_message": error_message
+    }
+
+    df = pd.DataFrame([row])
+
+    if results_path.exists():
+        df.to_csv(results_path, sep="\t", mode="a", header=False, index=False)
+    else:
+        df.to_csv(results_path, sep="\t", mode="w", header=True, index=False)
+
+
 def main():
     description = sys.argv[1] if len(sys.argv) > 1 else "no description"
 
-    X_train, X_val, X_test, y_train, y_val, y_test, numeric_features, categorical_features = load_data()
+    start_time = time.time()
 
-    preprocessor = build_preprocessor(numeric_features, categorical_features)
-    model = build_model(preprocessor)
+    try:
+        # Load deterministic train/validation data
+        X_train, X_val, y_train, y_val, preprocessor = load_data()
 
-    start = time.time()
-    model.fit(X_train, y_train)
-    runtime = time.time() - start
+        # Build model from editable model.py
+        model = build_model(preprocessor)
 
-    val_mae = evaluate_model(model, X_val, y_val)
+        # Train and evaluate
+        model.fit(X_train, y_train)
+        preds = model.predict(X_val)
 
-    file_exists = os.path.exists(RESULTS_FILE)
+        val_mae = mean_absolute_error(y_val, preds)
+        runtime_seconds = time.time() - start_time
 
-    with open(RESULTS_FILE, "a", newline="") as f:
-        writer = csv.writer(f, delimiter="\t")
+        # Log successful run
+        log_result(
+            description=description,
+            val_mae=round(val_mae, 4),
+            runtime_seconds=runtime_seconds,
+            status="success",
+            error_message=""
+        )
 
-        if not file_exists:
-            writer.writerow(["description", "val_mae", "runtime_seconds", "status"])
+        print(f"Validation MAE: {val_mae:.4f}")
+        print(f"Runtime seconds: {runtime_seconds:.4f}")
+        print("Status: success")
 
-        writer.writerow([description, round(val_mae, 4), round(runtime, 4), "logged"])
+    except Exception as e:
+        runtime_seconds = time.time() - start_time
+        error_message = traceback.format_exc().replace("\n", " | ")
 
-    print(f"Description: {description}")
-    print(f"Validation MAE: {val_mae:.4f}")
-    print(f"Runtime seconds: {runtime:.4f}")
-    print(f"Result logged to {RESULTS_FILE}")
+        # Log failed run
+        log_result(
+            description=description,
+            val_mae="NA",
+            runtime_seconds=runtime_seconds,
+            status="failure",
+            error_message=error_message
+        )
+
+        print("Experiment failed.")
+        print(f"Runtime seconds: {runtime_seconds:.4f}")
+        print(f"Status: failure")
+        print(f"Error: {e}")
 
 
 if __name__ == "__main__":

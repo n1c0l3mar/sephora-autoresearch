@@ -1,14 +1,16 @@
 from sklearn.pipeline import Pipeline
-from sklearn.ensemble import HistGradientBoostingRegressor
+from sklearn.ensemble import RandomForestRegressor
 
 
 def build_model(preprocessor):
     model = Pipeline(steps=[
         ("preprocessor", preprocessor),
-        ("model", HistGradientBoostingRegressor(
-            max_iter=200,
-            learning_rate=0.05,
-            random_state=390))
+        ("model", RandomForestRegressor(
+            n_estimators=300,
+            min_samples_leaf=1,
+            max_features=0.7,
+            random_state=390,
+            n_jobs=-1))
     ])
 
     return model

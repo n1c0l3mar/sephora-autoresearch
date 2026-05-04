@@ -40,6 +40,15 @@ Each experiment is evaluated using validation MAE.
 
 The current best model is determined based on the lowest validation MAE recorded in `results.tsv`.
 
+## Fixed Evaluator
+
+The fixed evaluator is `run.py`.
+
+The agent must not modify `run.py`, `prepare.py`, the validation split, the metric calculation, or the logging schema.
+
+`run.py` imports `build_model()` from `model.py`, trains the model using the deterministic split created by `prepare.py`, computes validation MAE, and appends the result to `results.tsv`.
+
+The final test set is not used during agent search.
 
 ## Evaluation Rule
 Every experiment must be evaluated by running:
@@ -51,3 +60,22 @@ The model is trained on the training set and evaluated on the validation set.
 Performance is measured using Mean Absolute Error (MAE).
 
 All experiments are compared using validation MAE only.
+
+## Failure Logging Rule
+
+Every experiment must be logged in `results.tsv`, even if it fails.
+
+If an experiment runs successfully, log:
+- description
+- validation MAE
+- runtime seconds
+- status = success
+
+If an experiment fails, crashes, or does not return a valid MAE, log:
+- description
+- val_mae = NA
+- runtime seconds
+- status = failure
+- error message if available
+
+The agent must not manually edit `results.tsv`. Failed runs should be recorded automatically by `run.py`.

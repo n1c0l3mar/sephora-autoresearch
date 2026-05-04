@@ -6,3 +6,5 @@ ridge regression alpha 1	0.3821	0.0854	logged
 lasso regression alpha 0.01	0.3806	0.2948	logged
 random forest 100 trees	0.3311	22.4052	logged
 gradient boosting	0.352	2.416	logged
+extra trees 500 leaf2 max_features0.7	0.3337	141.0652	logged
+random forest 300 max_features0.7	0.3289	100.6221	logged

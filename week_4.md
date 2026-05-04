@@ -31,11 +31,11 @@ The experiment axis is `max_features`.
 
 | Run | Condition | max_features | Val MAE | Runtime sec | Status | Decision | Interpretation |
 |---|---|---:|---:|---:|---|---|---|
-| A | Lower feature subsampling | 0.5 | 0.3294 | 72.1585 | success | discard | Worse than current best MAE 0.3284 |
-| B | Current/baseline setting | 0.7 | 0.3289 | 116.7758 | success | discard | Best within controlled 300-tree set so far, but worse than current best MAE 0.3284 |
-| C | Intermediate feature subsampling | 0.72 | 0.33 | 114.0266 | success | discard | Worse than current best MAE 0.3284 |
-| D | Intermediate feature subsampling | 0.75 | 0.3293 | 94.0711 | success | discard | Worse than current best MAE 0.3284 |
-| E | Intermediate feature subsampling | 0.78 | 0.3298 | 109.8493 | success | discard | Worse than current best MAE 0.3284 |
-| F | Intermediate feature subsampling | 0.82 | 0.3292 | 85.5758 | success | discard | Worse than current best MAE 0.3284 |
-| G | Higher feature subsampling | 0.85 | 0.3293 | 144.2035 | success | discard | Worse than current best MAE 0.3284 |
-| H | Full feature availability | 1.0 | 0.3296 | 120.5494 | success | discard | Worse than current best MAE 0.3284 |
+| A | Lower feature subsampling | 0.5 | 0.3294 | 72.1585 | success | discard | max_features=0.5 worsened MAE, suggesting too much feature subsampling may reduce split quality. |
+| B | Current/baseline setting | 0.7 | 0.3289 | 116.7758 | success | discard | max_features=0.7 was the strongest controlled 300-tree setting, suggesting moderate feature subsampling works best in this set. |
+| C | Full feature availability | 1.0 | 0.3296 | 120.5494 | success | discard | max_features=1.0 was similar to 0.7 but worse, suggesting the model is not very sensitive to this parameter in the tested range. |
+| D | Higher feature subsampling | 0.85 | 0.3293 | 144.2035 | success | discard | max_features=0.85 landed between 0.7 and 1.0, suggesting extra feature availability did not improve the 300-tree forest. |
+| E | Intermediate feature subsampling | 0.72 | 0.33 | 114.0266 | success | discard | max_features=0.72 was worse than 0.7, suggesting small moves above the baseline do not reliably improve MAE. |
+| F | Intermediate feature subsampling | 0.75 | 0.3293 | 94.0711 | success | discard | max_features=0.75 matched the 0.85 result, suggesting midrange values are stable but not competitive with the best overall model. |
+| G | Intermediate feature subsampling | 0.78 | 0.3298 | 109.8493 | success | discard | max_features=0.78 was one of the weaker controlled runs, suggesting this setting may add noise without improving splits. |
+| H | Intermediate feature subsampling | 0.82 | 0.3292 | 85.5758 | success | discard | max_features=0.82 was the best of the added midrange probes, but still did not beat the 0.7 controlled baseline. |

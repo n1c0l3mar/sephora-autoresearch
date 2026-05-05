@@ -25,3 +25,4 @@ rf controlled max_features 0.78	0.3298	109.8493	success	discard
 rf controlled max_features 0.82	0.3292	85.5758	success	discard	
 rf controlled max_features 0.72 and n_estimators 400	0.3301	6814.4588	success	discard	
 rf controlled max_features 0.7 and n_estimators 400	0.3284	91.4724	success	discard	
+rf controlled max_features 0.7 and n_estimators 1000	0.3289	259.9565	success	discard	

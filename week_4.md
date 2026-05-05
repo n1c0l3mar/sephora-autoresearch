@@ -6,12 +6,12 @@ Test whether changing the `max_features` hyperparameter in `RandomForestRegresso
 
 ## Experiment Axis
 
-The main experiment axis is `max_features`. The final two controlled follow-up runs also vary `n_estimators`.
+The main experiment axis is `max_features`. The final controlled follow-up runs also vary `n_estimators`.
 
 ## Held Fixed
 
 - Model family: RandomForestRegressor
-- n_estimators: 300 for the main max_features sweep; 400 for the final two follow-up runs
+- n_estimators: 300 for the main max_features sweep; 400 and 1000 for the follow-up runs
 - min_samples_leaf: 1
 - random_state: 390
 - n_jobs: -1
@@ -41,6 +41,7 @@ The main experiment axis is `max_features`. The final two controlled follow-up r
 | H | Intermediate feature subsampling | 300 | 0.82 | 0.3292 | 85.5758 | success | discard | max_features=0.82 was the best of the added midrange probes, but still did not beat the 0.7 controlled baseline. |
 | I | Follow-up tree count probe | 400 | 0.72 | 0.3301 | 6814.4588 | success | discard | Increasing to 400 trees at max_features=0.72 worsened MAE, suggesting more trees did not rescue this feature-sampling setting. |
 | J | Follow-up best-setting repeat | 400 | 0.7 | 0.3284 | 91.4724 | success | discard | Returning to max_features=0.7 with 400 trees matched the best MAE but did not improve it, suggesting the earlier best is stable but hard to beat. |
+| K | Large tree count probe | 1000 | 0.7 | 0.3289 | 259.9565 | success | discard | Increasing to 1000 trees at max_features=0.7 worsened MAE versus the 400-tree run, suggesting additional trees add cost without improving validation error. |
 
 # Week 4 Metric-Over-Time Plot
 ![Week 4 metric-over-time plot](week4_metric_over_time.png)

@@ -1,9 +1,5 @@
 # Week 4 Controlled Experiment 
 
-## Goal
-
-Test whether changing the `max_features` hyperparameter in `RandomForestRegressor` affects validation MAE.
-
 ## Experiment Axis
 
 The main experiment axis is `max_features`. The controlled follow-up runs also vary `n_estimators` and `min_samples_leaf`.
@@ -50,3 +46,6 @@ The main experiment axis is `max_features`. The controlled follow-up runs also v
 
 # Week 4 Metric-Over-Time Plot
 ![Week 4 metric-over-time plot](week4_metric_over_time.png)
+
+# Week 4 finding:
+Changing max_features did not meaningfully improve MAE. Increasing min_samples_leaf clearly worsened MAE, likely because the trees became too smoothed/underfit.

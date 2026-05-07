@@ -123,4 +123,4 @@ The agent should preserve a complete trace of:
 - what was rolled back
 - which changes appear meaningful
 
-The numeric outcome should be recorded in `results.tsv`; the explanation of the model change and rollback decision should be recorded in the agent's summary as well as `week_5.md`. 
+The numeric outcome should be recorded in `results.tsv`; the explanation of the model change and rollback decision should be recorded in the agent's summary. 

@@ -79,3 +79,48 @@ If an experiment fails, crashes, or does not return a valid MAE, log:
 - error message if available
 
 The agent must not manually edit `results.tsv`. Failed runs should be recorded automatically by `run.py`.
+
+## Week 5 Autonomous Block Rules
+
+The agent should run a longer autonomous experiment block while preserving a complete research log.
+
+The agent may only modify:
+- `model.py`
+
+The agent must not modify:
+- `run.py`
+- `prepare.py`
+- `product_info.csv`
+- `results.tsv` manually
+- `README.md`
+- `program.md`
+
+The only way `results.tsv` should change is by running:
+
+```bash
+python3 run.py "<experiment description>"
+```
+
+Each run in the autonomous block must include:
+- a clear experiment description
+- the model change attempted
+- validation MAE or `NA`
+- runtime seconds
+- status: `success` or `failure`
+- decision: `keep`, `discard`, or `crash`
+- error message if applicable
+
+Rollback rule:
+- If a run is `keep`, leave `model.py` as the new best version.
+- If a run is `discard` or `crash`, restore `model.py` to the current best valid working version before continuing.
+
+The agent should preserve a complete trace of:
+- what it tried
+- what changed
+- what was kept
+- what was discarded
+- what crashed
+- what was rolled back
+- which changes appear meaningful
+
+The numeric outcome should be recorded in `results.tsv`; the explanation of the model change and rollback decision should be recorded in the agent's summary as well as `week_5.md`. 

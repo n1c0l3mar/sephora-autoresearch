@@ -7,10 +7,10 @@ def build_model(preprocessor):
         ("preprocessor", preprocessor),
         ("model", RandomForestRegressor(
             n_estimators=400,
-            min_samples_leaf=50,
             max_features=0.7,
             random_state=390,
-            n_jobs=-1))
+            n_jobs=-1
+        ))
     ])
 
     return model

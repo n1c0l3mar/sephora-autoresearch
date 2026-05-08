@@ -31,3 +31,9 @@ rf controlled max_features 0.7 n_estimators 400 min_samples_leaf 5	0.3347	39.033
 rf controlled max_features 0.7 n_estimators 400 min_samples_leaf 10	0.338	32.1123	success	discard	
 rf controlled max_features 0.7 n_estimators 400 min_samples_leaf 25	0.3448	19.5721	success	discard	
 rf controlled max_features 0.7 n_estimators 400 min_samples_leaf 50	0.352	15.5692	success	discard	
+week5 run1 rf max_depth 20	0.3376	27.3927	success	discard	
+week5 run2 rf max_depth 30	0.3326	52.7122	success	discard	
+week5 run3 rf 300 trees max_features 0.7	0.3289	55.5423	success	discard	
+week5 run4 extra trees 400 max_features 0.7	0.334	113.4214	success	discard	
+week5 run5 rf max_samples 0.8	0.3291	67.7681	success	discard	
+week5 run6 gradient boosting 200 lr0.05 depth3 subsample0.8	0.3503	2.8721	success	discard	

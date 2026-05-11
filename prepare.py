@@ -20,7 +20,6 @@ def load_data(path="product_info.csv"):
         "product_id",
         "product_name",
         "brand_id",
-        "brand_name",
         "ingredients",
         "highlights",
         "variation_desc",

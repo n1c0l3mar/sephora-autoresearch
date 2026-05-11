@@ -37,3 +37,4 @@ week5 run3 rf 300 trees max_features 0.7	0.3289	55.5423	success	discard
 week5 run4 extra trees 400 max_features 0.7	0.334	113.4214	success	discard	
 week5 run5 rf max_samples 0.8	0.3291	67.7681	success	discard	
 week5 run6 gradient boosting 200 lr0.05 depth3 subsample0.8	0.3503	2.8721	success	discard	
+week5 feature eng add brand_name categorical	0.3225	114.7287	success	keep	

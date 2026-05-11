@@ -26,3 +26,6 @@ Dominant failure type = signal failure
 | 4 | Extra Trees, `n_estimators=400`, `max_features=0.7` | 0.3340 | Discard |
 | 5 | Random Forest, `max_samples=0.8` | 0.3291 | Discard |
 | 6 | Gradient Boosting, `n_estimators=200`, `learning_rate=0.05`, `max_depth=3`, `subsample=0.8` | 0.3503 | Discard |
+
+# Week 5 Metric Trajectory Plot
+![Week 5 Trajectory Plot](week5_metric_trajectory.png)

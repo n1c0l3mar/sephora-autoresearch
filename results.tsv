@@ -38,3 +38,8 @@ week5 run4 extra trees 400 max_features 0.7	0.334	113.4214	success	discard
 week5 run5 rf max_samples 0.8	0.3291	67.7681	success	discard	
 week5 run6 gradient boosting 200 lr0.05 depth3 subsample0.8	0.3503	2.8721	success	discard	
 week5 feature eng add brand_name categorical	0.3225	114.7287	success	keep	
+week5 engineered model rf 400 max_features 0.6	0.3231	89.3135	success	discard	
+week5 engineered model rf 400 max_features 0.75	0.3227	97.2136	success	discard	
+week5 engineered model rf 600 max_features 0.7	0.3226	132.0807	success	discard	
+week5 engineered model rf 400 max_features 0.7 min_samples_split 4	0.3227	94.7354	success	discard	
+week5 engineered model extra trees 500 max_features 0.75	0.3258	160.8591	success	discard	

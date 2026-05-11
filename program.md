@@ -125,34 +125,36 @@ The agent should preserve a complete trace of:
 
 The numeric outcome should be recorded in `results.tsv`; the explanation of the model change and rollback decision should be recorded in the agent's summary. 
 
-## Week 5 Feature Engineering Extension Rules
+## Week 5 Feature-Engineered Model Block Rules
 
-After the Week 5 model-only autonomous block failed to improve the current best validation MAE, the agent may run a controlled feature-engineering extension.
+The project now includes a fixed feature-engineering setup.
 
-This extension is not a restart of the project. The evaluator, metric, deterministic split, target variable, and logging rules remain fixed.
+For this block, the engineered feature set is treated as frozen. The agent should not create new engineered features, remove engineered features, or change the feature-engineering logic.
 
-For this feature-engineering extension only, the agent may modify:
-- `feature_engineering.py`
-- `prepare.py`
+The goal of this block is to test whether model and hyperparameter changes can improve validation MAE using the updated feature set.
+
+For this block, the agent may only modify:
 - `model.py`
 
-The agent may modify `prepare.py` ONLY to:
-- import `add_engineered_features()` from `feature_engineering.py`
-- apply engineered features after loading `product_info.csv`
-- apply engineered features before dropping columns and before the deterministic train/validation/test split
-- update feature lists or dropped columns only as needed to include engineered predictors
-
 The agent must not modify:
+- `feature_engineering.py`
+- `prepare.py`
 - `run.py`
 - `product_info.csv`
 - `results.tsv` manually
-- the target variable
-- the validation metric
-- the train/validation/test split proportions
-- `random_state = 390`
-- the final test set plan
+- `README.md`
+- `program.md`
 
-Each feature-engineering experiment must be evaluated by running:
+The agent must keep:
+- the current feature-engineering logic fixed
+- `brand_name` included as a categorical feature
+- the target variable fixed as `rating`
+- the validation metric fixed as MAE
+- the deterministic train/validation/test split unchanged
+- `random_state = 390`
+- the final test set unused during search
+
+Each experiment must be evaluated by running:
 
 ```bash
 python3 run.py "<experiment description>"

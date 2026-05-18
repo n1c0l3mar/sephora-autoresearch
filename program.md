@@ -154,6 +154,23 @@ The agent must keep:
 - `random_state = 390`
 - the final test set unused during search
 
+
+## Week 6 Locked Direction
+
+The project is now locked around feature representation and Random Forest modeling. The strongest supported finding is that adding `brand_name` back as a categorical predictor improved validation MAE from the best at `0.3284` to `0.3225`.
+
+The final project direction is:
+- use the improved feature set with `brand_name` included
+- keep the evaluation setup fixed
+- keep the deterministic train/validation/test split fixed
+- use validation MAE as the comparison metric
+- preserve the AutoResearch trace showing what was kept, discarded, and dropped
+
+The project will no longer pursue:
+- broad model-family exploration
+- large Random Forest hyperparameter sweeps
+- changes to the evaluator, metric, split, or logging schema
+
 Each experiment must be evaluated by running:
 
 ```bash

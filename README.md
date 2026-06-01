@@ -9,15 +9,6 @@ Predicting Sephora Product Ratings Using Structured Product Data
 Which structured product features (e.g., price, category, product metadata) best predict Sephora product ratings?
 
 ---
-
-## Data Source
-Kaggle Dataset:  
-https://www.kaggle.com/datasets/nadyinky/sephora-products-and-skincare-reviews  
-
-This project uses:
-- product_info.csv
-
----
 ## Repository Structure
 
 - `README.md`: project overview and instructions
@@ -34,6 +25,14 @@ This project uses:
 
 ---
 
+## Data Source
+Kaggle Dataset:  
+https://www.kaggle.com/datasets/nadyinky/sephora-products-and-skincare-reviews  
+
+This project uses:
+- product_info.csv
+
+---
 ## Target Variable
 - rating
 

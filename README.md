@@ -21,7 +21,7 @@ Which structured product features (e.g., price, category, product metadata) best
 - `docs/`: weekly logs and memos
 - `scripts/`: plotting scripts
 - `figures/`: generated plots
-- `reports/`: final report materials
+- `final_deliverables/`: final report materials
 
 ---
 

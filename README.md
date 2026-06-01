@@ -16,12 +16,14 @@ Which structured product features (e.g., price, category, product metadata) best
 - `prepare.py`: frozen data loading, preprocessing, splitting, and evaluation
 - `model.py`: editable model file
 - `run.py`: experiment runner and logger
+- `final_test_eval.py`: guarded one-time held-out test evaluator for the locked final model
 - `feature_engineering.py`: engineered feature creation
 - `results.tsv`: full experiment archive
 - `docs/`: weekly logs and memos
 - `scripts/`: plotting scripts
 - `figures/`: generated plots
 - `final_deliverables/`: final report materials
+- `final_deliverables/final_test_result.md`: recorded one-time held-out test MAE
 
 ---
 
@@ -104,4 +106,3 @@ Open the file results.tsv. A new row should appear similar to:
 baseline linear regression    0.3825    0.07  
 
 ---
-

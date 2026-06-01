@@ -1,0 +1,75 @@
+\title{AutoResearch for Sephora Product Rating Prediction}
+
+\maketitle
+
+\begin{abstract}
+This project studies whether structured Sephora product metadata can predict product ratings. I used an AutoResearch loop in which an agent modified only the model definition, ran a fixed evaluator, and retained changes only when validation mean absolute error (MAE) improved. The linear regression baseline achieved a validation MAE of 0.3825. Random Forest modeling reduced MAE to 0.3284, while repeated model-only tuning showed diminishing returns. The best result, 0.3225, came from the improved feature representation that included \texttt{brand\_name} as a categorical predictor. The final result supports a modest conclusion: for this dataset, meaningful feature representation mattered more than an extended hyperparameter sweep.
+\end{abstract}
+
+\section{Introduction}
+
+The research question is: how well can Sephora product ratings be predicted using structured product metadata? Product ratings are influenced by many factors that are difficult to observe directly, but product-level fields such as price, category, availability, and brand may still contain useful signal. The goal of this project is not to claim a complete explanation of customer ratings. Instead, it is to build a reproducible experimental trace that compares modeling directions under a fixed evaluation procedure.
+
+The project used an AutoResearch workflow. An agent could change the model implementation while the evaluator, data split, target, and metric remained fixed. This design made it possible to compare simple linear models, ensemble models, Random Forest hyperparameters, and a later feature-representation improvement. The strongest result was a feature-engineered Random Forest with validation MAE 0.3225, compared with 0.3825 for the baseline linear regression.
+
+\section{Dataset and Evaluation}
+
+The project uses \texttt{product\_info.csv} from the Sephora products and skincare reviews dataset. The target variable is \texttt{rating}. Rows with missing target values are removed before splitting. The repository defines a deterministic 70\% train, 15\% validation, and 15\% test split with \texttt{random\_state = 390}. The final test set was not used during model search.
+
+The comparison metric is validation mean absolute error (MAE), where lower values are better. Numeric predictors are median-imputed. Categorical predictors are imputed with their most frequent value and one-hot encoded with unknown categories ignored. The final direction keeps \texttt{brand\_name} as a categorical predictor. The repository also contains a feature-engineering module for structured product signals, but the central recorded improvement in the experiment log is the addition of \texttt{brand\_name}.
+
+\section{AutoResearch Loop Design}
+
+The experimental protocol restricted edits to \texttt{model.py}. The files \texttt{prepare.py}, \texttt{run.py}, and \texttt{product\_info.csv} were frozen, and \texttt{results.tsv} could not be edited manually. Each experiment followed the same loop:
+
+\begin{enumerate}
+    \item Modify the model or its hyperparameters in \texttt{model.py}.
+    \item Run \texttt{python3 run.py "<description>"}.
+    \item Fit on the training split and compute validation MAE.
+    \item Append the description, MAE, runtime, status, decision, and any error message to \texttt{results.tsv}.
+    \item Keep the new model only if its MAE is lower than the previous best; otherwise discard it and restore the best working model. A run without a valid MAE is recorded as a crash.
+\end{enumerate}
+
+This narrow editable surface reduced the risk of changing the split or metric while searching. It also preserved unsuccessful experiments, making the archive useful for diagnosing plateaus rather than reporting only favorable runs.
+
+\section{Experimental Results}
+
+Table~\ref{tab:results} summarizes the most important experiments from \texttt{results.tsv}. The linear models produced only small improvements over baseline. Random Forest created the largest model-family improvement: 100 trees reduced MAE from 0.3825 to 0.3311. Increasing to 300 and then 400 trees with \texttt{max\_features=0.7} improved MAE to 0.3289 and 0.3284. Extra Trees and Gradient Boosting did not beat this setting.
+
+\begin{table}[h]
+\centering
+\footnotesize
+\caption{Curated validation results. Lower MAE is better.}
+\label{tab:results}
+\begin{tabular}{p{0.43\linewidth} p{0.27\linewidth} r l}
+\hline
+Experiment & Model & Val.\ MAE & Outcome \\
+\hline
+Baseline & Linear Regression & 0.3825 & Baseline \\
+\texttt{alpha=1} & Ridge Regression & 0.3821 & Keep \\
+\texttt{alpha=0.01} & Lasso Regression & 0.3806 & Keep \\
+100 trees & Random Forest & 0.3311 & Keep \\
+400 trees, \texttt{max\_features=0.7} & Random Forest & 0.3284 & Keep \\
+500 trees, leaf size 2, \texttt{max\_features=0.7} & Extra Trees & 0.3337 & Discard \\
+Default recorded run & Gradient Boosting & 0.3520 & Discard \\
+Add \texttt{brand\_name} categorical predictor & Feature-engineered Random Forest & \textbf{0.3225} & \textbf{Keep} \\
+Post-feature update: 600 trees, \texttt{max\_features=0.7} & Random Forest & 0.3226 & Discard \\
+\hline
+\end{tabular}
+\end{table}
+
+The controlled Random Forest sweeps clarified the plateau. Changing \texttt{max\_features} generally stayed around 0.329--0.330 and did not improve on 0.3284. Increasing \texttt{min\_samples\_leaf} from 1 to 5, 10, 25, and 50 worsened MAE from 0.3284 to 0.3347, 0.3380, 0.3448, and 0.3520. A 1000-tree run achieved 0.3289, adding runtime without improving validation error. In the later autonomous block, depth limits, bootstrap subsampling, Extra Trees, and Gradient Boosting also failed to beat the best Random Forest.
+
+The most important change was feature representation. Adding \texttt{brand\_name} as a categorical predictor improved MAE from 0.3284 to 0.3225. A post-feature-engineering tuning block then tested nearby Random Forest and Extra Trees settings. Its closest result was 0.3226 from a 600-tree Random Forest, which did not beat the retained model. The final model therefore remains the Random Forest direction with the improved feature set.
+
+\section{Failure Analysis and Reflection}
+
+The archive includes two intentional crash tests. One produced \texttt{ValueError: too many values to unpack (expected 5)}, demonstrating that evaluator and data-loader interface changes can break the loop. Another passed an invalid \texttt{n\_estimators} value to Random Forest and produced an \texttt{InvalidParameterError}. These failures were logged with no MAE and classified as crashes. The logs do not contain a separate import-error experiment, so it would be inaccurate to report an observed wrong-import crash. However, wrong imports remain an important implementation risk because \texttt{run.py} imports \texttt{build\_model()} directly from \texttt{model.py}; a redesigned loop should run a fast import and pipeline-construction check before expensive training.
+
+Model compatibility also required judgment. Candidate estimators had to work with the existing preprocessing output and fixed evaluator. Runtime behavior mattered as well: one successful Random Forest probe was logged at 6814.4588 seconds, while many comparable runs completed in roughly tens or hundreds of seconds. A runtime cap and an early smoke test would make autonomous search more efficient.
+
+The agent performed well when it preserved a complete trace, compared every valid run against the current best, and rolled back discarded models. It performed poorly when search became too local: many nearby Random Forest settings consumed time while producing nearly identical or worse validation MAE. Human judgment was needed to recognize diminishing returns and lock the project around the feature-representation story. In a redesigned loop, I would add staged validation: first test imports and estimator compatibility, then run a small-budget smoke test, and only then launch full evaluation. I would also use explicit experiment budgets and stop a search direction after repeated non-improvements.
+
+\section{Conclusion}
+
+This project used a constrained AutoResearch loop to predict Sephora product ratings from structured metadata. The baseline linear regression achieved validation MAE 0.3825. Random Forest modeling produced a large improvement to 0.3284, but additional model-only tuning plateaued. The best recorded result was 0.3225 after including \texttt{brand\_name} as a categorical predictor in the improved feature representation. The main lesson is not that one hyperparameter setting is universally optimal, but that a fixed, auditable evaluation loop can distinguish productive modeling changes from costly tuning with diminishing returns.

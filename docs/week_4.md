@@ -45,7 +45,7 @@ The main experiment axis is `max_features`. The controlled follow-up runs also v
 | P | Very strong leaf regularization | 400 | 0.7 | 50 | 0.352 | 15.5692 | success | discard | min_samples_leaf=50 was the weakest leaf sweep result, indicating heavy smoothing discards too much signal. |
 
 # Week 4 Metric-Over-Time Plot
-![Week 4 metric-over-time plot](figures/week4_metric_over_time.png)
+![Week 4 metric-over-time plot](../figures/week4_metric_over_time.png)
 
 # Week 4 finding:
 Changing max_features did not meaningfully improve MAE. Increasing min_samples_leaf clearly worsened MAE, likely because the trees became too smoothed/underfit.

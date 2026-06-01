@@ -59,4 +59,4 @@ Dominant failure type = no model-only change improved on the engineered-feature 
 The post-feature-engineering model-tuning block did not improve on the `0.3225` feature-engineered best. The closest run was only `0.0001` MAE worse, suggesting the current Random Forest setup remains a strong local optimum on the fixed engineered feature set.
 
 # Week 5 Metric Trajectory Plot
-![Week 5 Trajectory Plot](figures/week5_metric_trajectory.png)
+![Week 5 Trajectory Plot](../figures/week5_metric_trajectory.png)

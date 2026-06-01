@@ -29,7 +29,7 @@ Dominant failure type = signal failure
 
 ## Post-Feature-Engineering Model-Tuning Block
 
-This second Week 5 block was run **after** the feature-engineering update that added `brand_name` as a categorical feature and froze the engineered feature setup. The feature-engineering logic, preprocessing, target, validation split, metric, and final test set remained unchanged. Only `model.py` was modified during the experiments, and `results.tsv` was updated only by running `run.py`.
+This second Week 5 block was run **after** the feature-engineering updates. 
 
 **Starting best after feature engineering:**  
 `Random Forest n_estimators = 400 max_features = 0.7`

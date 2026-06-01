@@ -18,6 +18,21 @@ This project uses:
 - product_info.csv
 
 ---
+## Repository Structure
+
+- `README.md`: project overview and instructions
+- `program.md`: agent instructions and AutoResearch rules
+- `prepare.py`: frozen data loading, preprocessing, splitting, and evaluation
+- `model.py`: editable model file
+- `run.py`: experiment runner and logger
+- `feature_engineering.py`: engineered feature creation
+- `results.tsv`: full experiment archive
+- `docs/`: weekly logs and memos
+- `scripts/`: plotting scripts
+- `figures/`: generated plots
+- `reports/`: final report materials
+
+---
 
 ## Target Variable
 - rating
